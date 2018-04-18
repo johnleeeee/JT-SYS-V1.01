@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.jt.blog.BlogDao">
+	<!-- 查询 
+		select:用于定义查询的sql
+		id:select元素的唯一标识
+		resultType:表示一行记录要映射的哪个对象
+	-->
+	<select id="findBlogs" resultType="map">
+		select * from blog
+	</select>
+	<!-- 基于id进行数据查询
+	当mybatis底层在解析元素时，发现#{id}形式的表达式，底层会生成如select *
+	from blog where id=？的sql,然后传递给preparedstatement -->
+	<select id="findBlogById" resultType="map">
+		select *
+		from blog
+		where
+		id=#{id}
+	</select>
+	
+	<!-- <select id="findPageBlogs" resultType="map">
+		select *
+		from blog
+		limit
+		#{array[0]},#{array[1]}
+	</select> -->
+	<select id="findPageBlogs" resultType="map">
+		select *
+		from blog
+		limit
+		#{startIndex},#{pageIndex}
+	</select>
+	<!-- 插入,使用对象
+	系统底层会的访问#{}表达式中参数对应对象的get方法，
+	假如没有get方法会获取参数名对应的对象属性值
+		
+	 -->
+	<insert id="insertObject01" parameterType="com.jt.blog.Blog">
+		insert into blog (id,title,content,createdTime)
+		 values
+		 (null,#{title},#{content},now())
+	</insert>
+	<!-- 使用数组 -->
+	<!-- <insert id="insertObject">
+		insert into blog
+		(id,title,content,createdTime)
+		values
+		(null,#{array[0]},#{array[1]},now())
+	</insert> -->
+	<!-- 更新 (对象) map-->
+	<update id="updateObject02">
+		update blog set title=#{title},
+		content=#{content}
+		where id=#{id}
+	</update>
+	
+	<update id="updateObject03">
+		update blog set title=#{list[0]},
+		content=#{list[1]}
+		where id=#{list[2]}
+	</update>
+	
+	<!-- <update id="updateObject">
+		update blog
+		set title=#{array[0]},
+		content=#{array[1]}
+		where id=#{array[2]}
+	</update> -->
+	
+	<!-- 删除 -->
+	<delete id="deleteObject">
+		delete
+		from blog
+		where id=#{id}
+	</delete>
+
+</mapper>
