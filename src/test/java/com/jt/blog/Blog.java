@@ -1,5 +1,9 @@
 package com.jt.blog;
-
+/**
+ * 博客实体类
+ * @author Administrator
+ *
+ */
 public class Blog {
 	private int id;
 	private String title;
