@@ -1,7 +1,7 @@
 package com.jt.blog;
 /**
  * 博客实体类
- * @author Administrator
+ * @author lizhiqiang
  *
  */
 public class Blog {
